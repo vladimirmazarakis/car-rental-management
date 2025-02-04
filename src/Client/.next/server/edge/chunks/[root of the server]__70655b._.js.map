@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 23, "column": 0}, "map": {"version":3,"sources":["turbopack://[project]/middleware.ts"],"sourcesContent":["import { NextResponse } from \"next/server\";\r\nimport type { NextRequest } from \"next/server\";\r\n\r\nexport function middleware(req: NextRequest) {\r\n  const token = req.cookies.get(\"token\")?.value; // Read token from cookies\r\n\r\n  // Define protected routes\r\n  const protectedRoutes = [\"/app\"];\r\n\r\n  // Check if the request is for a protected route\r\n  if (protectedRoutes.some(route => req.nextUrl.pathname.startsWith(route))) {\r\n    if (!token) {\r\n      return NextResponse.redirect(new URL(\"/auth/login\", req.url)); // Redirect to login\r\n    }\r\n  }\r\n\r\n  return NextResponse.next(); // Allow access if token exists\r\n}\r\n\r\n// Apply middleware only to protected routes\r\nexport const config = {\r\n  matcher: [\"/app/:path*\"], // Protects everything inside `/app/`\r\n};\r\n"],"names":[],"mappings":";;;;AAAA;AAAA;;AAGO,SAAS,WAAW,GAAgB;IACzC,MAAM,QAAQ,IAAI,OAAO,CAAC,GAAG,CAAC,UAAU,OAAO,0BAA0B;IAEzE,0BAA0B;IAC1B,MAAM,kBAAkB;QAAC;KAAO;IAEhC,gDAAgD;IAChD,IAAI,gBAAgB,IAAI,CAAC,CAAA,QAAS,IAAI,OAAO,CAAC,QAAQ,CAAC,UAAU,CAAC,SAAS;QACzE,IAAI,CAAC,OAAO;YACV,OAAO,qLAAA,CAAA,eAAY,CAAC,QAAQ,CAAC,IAAI,IAAI,eAAe,IAAI,GAAG,IAAI,oBAAoB;QACrF;IACF;IAEA,OAAO,qLAAA,CAAA,eAAY,CAAC,IAAI,IAAI,+BAA+B;AAC7D;AAGO,MAAM,SAAS;IACpB,SAAS;QAAC;KAAc;AAC1B"}},
+    {"offset": {"line": 49, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}
