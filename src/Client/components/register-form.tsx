@@ -10,40 +10,46 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, useFormState } from "react-hook-form"
 import { z } from "zod"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
-import { login } from "@/lib/authLib";
-import { useFormStatus } from "react-dom";
+import { login, register } from "@/lib/authLib";
 
 const formSchema = z.object({
   email: z.string().email(),
-  password: z.string()
-});
+  password: z.string(),
+  confirmPassword: z.string()
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"], // path of error
+});;
 
-type LoginFormSchema = z.infer<typeof formSchema>;
+type RegisterFormSchema = z.infer<typeof formSchema>;
 
-export function LoginForm({
+export function RegisterForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
 
-  const form = useForm<LoginFormSchema>({
+  const form = useForm<RegisterFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues:{
       email: "",
-      password: ""
+      password: "",
+      confirmPassword: ""
     },
   });
 
-  async function onSubmit(values: LoginFormSchema)
+  
+
+  async function onSubmit(values: RegisterFormSchema)
   {
     const data = {
       email: values.email,
       password: values.password,
     };
     
-    if(!await login(data.email, data.password)){
-      form.setError("root", {
-        message: "Invalid credentials."
-      });
+    const result = await register(data.email, data.password);
+
+    for(const [key, value] of Object.entries(result?.errors)){
+      form.setError(`root.${key}`, {message: value as string});
     }
   }
 
@@ -55,9 +61,9 @@ export function LoginForm({
             <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 md:p-8">
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col items-center text-center">
-                  <h1 className="text-2xl font-bold">Welcome back</h1>
+                  <h1 className="text-2xl font-bold">Welcome</h1>
                   <p className="text-balance text-muted-foreground">
-                    Login to your Car Rental Account
+                    Create a new Car Rental account
                   </p>
                 </div>
                 <FormField control={form.control} name="email" render={({field}) => 
@@ -78,29 +84,38 @@ export function LoginForm({
                     <FormControl>
                     <Input {...field} type="password" required />
                     </FormControl>
-                    <FormDescription>
-                      <a
-                        href="#"
-                        className="ml-auto text-sm underline-offset-2 hover:underline"
-                      >
-                        Forgot your password?
-                      </a>
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
                 />
-                <LoginFormSubmit />
-                <p className={cn("text-sm text-center text-red-600", form.formState.errors.root?.message === undefined ? "hidden" : "block")}>
-                  {form.formState.errors.root?.message}
-                </p>
-                
+                <FormField control={form.control} name="confirmPassword" render={({field}) => 
+                (
+                  <FormItem className="grid gap-2">
+                    <FormLabel>Confirm password</FormLabel>
+                    <FormControl>
+                    <Input {...field} type="password" required />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+                />
+                <RegisterFormSubmit />
+                {form.formState.errors.root && (
+                  <div style={{ color: "red" }}>
+                    {Object.keys(form.formState.errors.root).map((key) => {
+                      
+                      return(
+                      <p className={cn("text-sm text-center text-red-600")} key={key}>{form.formState.errors.root?.[key]?.message}</p>
+                    )})}
+                  </div>
+                )}
                 <div className="text-center text-sm">
-                  Don&apos;t have an account?{" "}
-                  <a href="/auth/register" className="underline underline-offset-4">
-                    Sign up
+                  Already have an account?{" "}
+                  <a href="/auth/login" className="underline underline-offset-4">
+                    Sign in
                   </a>
                 </div>
+                
               </div>
             </form>
           </Form>
@@ -121,12 +136,12 @@ export function LoginForm({
   )
 }
 
-export function LoginFormSubmit(){
+export function RegisterFormSubmit(){
   const { isDirty, isValid } = useFormState();
 
   return (
     <Button type="submit" disabled={!isDirty || !isValid} className="w-full">
-      Login
+      Create account
     </Button>
   );
 }

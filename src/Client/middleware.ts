@@ -1,19 +1,29 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { getRefreshToken, resetToken } from "./lib/authToken";
+import { logout, refresh } from "./lib/authLib";
 
-export function middleware(req: NextRequest) {
-  const token = req.cookies.get("token")?.value; // Read token from cookies
+export async function middleware(req: NextRequest) {
+  const refreshToken = await getRefreshToken();
 
-  // Define protected routes
-  const protectedRoutes = ["/app"];
+  let shouldAuthenticate = false;
 
-  // Check if the request is for a protected route
-  if (protectedRoutes.some(route => req.nextUrl.pathname.startsWith(route))) {
-    if (!token) {
-      return NextResponse.redirect(new URL("/auth/login", req.url)); // Redirect to login
-    }
+  if(!refreshToken){
+    shouldAuthenticate = true;
   }
 
+  if(!(await refresh()))
+  {
+    shouldAuthenticate = true;
+  }
+
+  if(shouldAuthenticate)
+  {
+    await resetToken();
+    return NextResponse.redirect(new URL("/auth/login", req.url));
+  }
+
+  
   return NextResponse.next(); // Allow access if token exists
 }
 
