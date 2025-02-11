@@ -24,7 +24,6 @@ export const resetToken = async () => {
       const ckies = await cookies();
       ckies.delete("authToken");
       ckies.delete("authRefreshToken");
-      redirect("/login");
     } catch (error) {
       console.error(error);
     }

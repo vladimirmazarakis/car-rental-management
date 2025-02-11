@@ -32,6 +32,7 @@ public class GetCarQueryHandler : IRequestHandler<GetCarQuery, CarVm>
 
     public async Task<CarVm> Handle(GetCarQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Cars.AsNoTracking().ProjectTo<CarVm>(_mapper.ConfigurationProvider).FirstAsync(c => c.Id == request.Id);
+        var car = await _context.Cars.AsNoTracking().FirstOrDefaultAsync(c => c.Id == request.Id);
+        return _mapper.Map<CarVm>(car);
     }
 }

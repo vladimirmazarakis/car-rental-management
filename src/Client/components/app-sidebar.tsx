@@ -53,21 +53,13 @@ const data = {
   navMain: [
     {
       title: "Cars",
-      url: "#",
+      url: "/app/cars",
       icon: Car,
       isActive: true,
       items: [
         {
-          title: "Statistics",
-          url: "#",
-        },
-        {
-          title: "Car list",
-          url: "#",
-        },
-        {
-          title: "Service history ",
-          url: "#",
+          title: "🚙 All cars",
+          url: "/app/cars",
         },
       ],
     },

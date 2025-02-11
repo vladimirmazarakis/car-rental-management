@@ -8,10 +8,10 @@ export default async function Layout({
   }>)
 {
 
-    const loggedIn = await isLoggedIn();
-    if(loggedIn){
-        redirect("/app");
-    }
+    // const loggedIn = await isLoggedIn();
+    // if(loggedIn){
+    //     redirect("/app");
+    // }
 
     return (<>{children}</>);
 }
