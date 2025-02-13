@@ -33,7 +33,8 @@ export default function Page(){
             make: form.make,
             model: form.model,
             year: Number.parseInt(form.year),
-            mileageInKm: Number.parseInt(form.mileageInKm)
+            mileageInKm: Number.parseInt(form.mileageInKm),
+            pricePerDay: Number.parseInt(form.pricePerDay)
         };
 
         await fetch("/api/Cars",

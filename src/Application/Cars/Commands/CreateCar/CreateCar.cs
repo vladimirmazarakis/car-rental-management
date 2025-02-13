@@ -12,6 +12,7 @@ public record CreateCarCommand : IRequest<CarVm>
     public string? Model { get; set; }
     public int Year { get; set; }
     public int MileageInKm { get; set; }
+    public decimal PricePerDay { get; set; }
 }
 
 public class CreateCarCommandValidator : AbstractValidator<CreateCarCommand>
@@ -40,13 +41,14 @@ public class CreateCarCommandHandler : IRequestHandler<CreateCarCommand, CarVm>
             Model = request.Model,
             Year = request.Year,
             MileageInKm = request.MileageInKm,
+            PricePerDay = request.PricePerDay
         };
 
         await _context.Cars.AddAsync(newCar);
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        var carVm = new CarVm(newCar.Id, newCar.Make, newCar.Model, newCar.Year, newCar.MileageInKm);           
+        var carVm = new CarVm(newCar.Id, newCar.Make, newCar.Model, newCar.Year, newCar.MileageInKm, newCar.PricePerDay);           
 
         return carVm;
     }

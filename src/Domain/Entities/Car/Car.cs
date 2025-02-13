@@ -6,4 +6,5 @@ public class Car : BaseAuditableEntity
     public string? Model { get; set; }
     public int Year { get; set; }
     public int MileageInKm { get; set; }
+    public decimal PricePerDay { get; set; }
 }

@@ -51,6 +51,9 @@ namespace CarRental.Infrastructure.Data.Migrations
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("PricePerDay")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("Year")
                         .HasColumnType("int");
 

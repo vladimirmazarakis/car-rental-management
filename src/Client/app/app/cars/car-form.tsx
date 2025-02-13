@@ -15,6 +15,9 @@ export const carFormScheme = z.object({
       }),
     mileageInKm: z.string().refine((val) => !Number.isNaN(parseInt(val, 10)), {
         message: "Expected number, received a string"
+      }),
+    pricePerDay: z.string().refine((val) => !Number.isNaN(parseInt(val, 10)), {
+        message: "Expected number, received a string"
       })
 });
 
@@ -27,7 +30,8 @@ export function CarForm({onSubmit, car} : {onSubmit: (form: CarFormSchemeType) =
         make: car?.make,
         model: car?.model,
         year: car?.year.toString(),
-        mileageInKm: car?.mileageInKm.toString()
+        mileageInKm: car?.mileageInKm.toString(),
+        pricePerDay: car?.pricePerDay.toString()
     }
   }) 
   : 
@@ -37,7 +41,8 @@ export function CarForm({onSubmit, car} : {onSubmit: (form: CarFormSchemeType) =
               make: "",
               model: "",
               year: "2000",
-              mileageInKm: "0"
+              mileageInKm: "0",
+              pricePerDay: "0"
           }
   });
 
@@ -125,6 +130,24 @@ export function CarForm({onSubmit, car} : {onSubmit: (form: CarFormSchemeType) =
                   {...field} />
               </FormControl>
               <FormDescription>Amount of kilometers the car has been driven.</FormDescription>
+              <FormMessage />
+              </FormItem>
+          )}
+          />
+          <FormField
+          control={form.control}
+          name="pricePerDay"
+          render={({ field }) => (
+              <FormItem>
+              <FormLabel>Price per day</FormLabel>
+              <FormControl>
+                  <Input 
+                  placeholder="50"
+                  
+                  type="number"
+                  {...field} />
+              </FormControl>
+              <FormDescription>Price of car per day.</FormDescription>
               <FormMessage />
               </FormItem>
           )}

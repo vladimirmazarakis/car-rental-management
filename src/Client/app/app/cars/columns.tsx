@@ -72,6 +72,15 @@ export function getColumns(updateData: () => void){
       ),
     },
     {
+      accessorKey: "pricePerDay",
+      header: "Price per day",
+      cell: ({ row }) => (
+        <span className="flex items-center gap-2">
+          💵 {row.original.pricePerDay} $
+        </span>
+      ),
+    },
+    {
       accessorKey: "status",
       header: "Status",
       cell: ({ row }) => {

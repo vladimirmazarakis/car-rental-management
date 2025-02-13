@@ -595,6 +595,10 @@
           "mileageInKm": {
             "type": "integer",
             "format": "int32"
+          },
+          "pricePerDay": {
+            "type": "number",
+            "format": "decimal"
           }
         }
       },
@@ -617,6 +621,10 @@
           "mileageInKm": {
             "type": "integer",
             "format": "int32"
+          },
+          "pricePerDay": {
+            "type": "number",
+            "format": "decimal"
           }
         }
       },
@@ -643,6 +651,10 @@
           "mileageInKm": {
             "type": "integer",
             "format": "int32"
+          },
+          "pricePerDay": {
+            "type": "number",
+            "format": "decimal"
           }
         }
       },

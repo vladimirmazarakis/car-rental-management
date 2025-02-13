@@ -3,5 +3,6 @@ export type CarVm = {
     make: string,
     model: string,
     year: number,
-    mileageInKm: number
+    mileageInKm: number,
+    pricePerDay: number
 };
