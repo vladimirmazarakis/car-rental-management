@@ -6,7 +6,7 @@ using CarRental.Application.Cars.Commands.UpdateCar;
 using CarRental.Application.Cars.Queries;
 using CarRental.Application.Cars.Queries.GetCar;
 using CarRental.Application.Cars.Queries.GetCars;
-using CarRental.Domain.Entities.Car;
+using CarRental.Domain.Entities;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 

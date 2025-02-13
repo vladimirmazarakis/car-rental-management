@@ -1,4 +1,4 @@
-namespace CarRental.Domain.Entities.Car;
+namespace CarRental.Domain.Entities;
 
 public class Car : BaseAuditableEntity
 {

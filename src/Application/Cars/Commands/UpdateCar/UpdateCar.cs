@@ -1,7 +1,7 @@
 ﻿using CarRental.Application.Cars.Queries;
 using CarRental.Application.Common.Interfaces;
 using CarRental.Application.Common.Security;
-using CarRental.Domain.Entities.Car;
+using CarRental.Domain.Entities;
 
 namespace CarRental.Application.Cars.Commands.UpdateCar;
 
