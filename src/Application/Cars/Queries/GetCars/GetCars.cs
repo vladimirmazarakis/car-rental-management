@@ -1,6 +1,6 @@
 ﻿using CarRental.Application.Common.Interfaces;
 using CarRental.Application.Common.Security;
-using CarRental.Domain.Entities.Car;
+using CarRental.Domain.Entities;
 
 namespace CarRental.Application.Cars.Queries.GetCars;
 

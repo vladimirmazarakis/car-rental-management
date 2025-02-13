@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using CarRental.Application.Common.Interfaces;
 using CarRental.Domain.Entities;
+using CarRental.Domain.Entities.Booking;
 using CarRental.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     }
 
     public DbSet<Car> Cars => Set<Car>();
+
+    public DbSet<Booking> Bookings => Set<Booking>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
